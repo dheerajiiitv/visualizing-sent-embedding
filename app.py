@@ -13,7 +13,7 @@ def get_relevance():
     print("Finding Word Imrportance")
     user_text  = request.json['user_text']
     #TODO: Preprocessing in input text
-
+    print("User text", user_text)
 
     word_importance = get_important_words(user_text, user_text)
     word_score_tuple = list(map(lambda x, y: (x, y), user_text.split(), word_importance))
