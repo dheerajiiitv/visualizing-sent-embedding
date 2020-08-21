@@ -6,10 +6,10 @@
 ### Install
 1. Clone the repo
 2. Install all dependencies using command
-```pip install -r requirements.txt```
+```pip3 install -r requirements.txt```
 3. Run the application - 
     ```
-    python app.py
+    python3 app.py
     ```
     
 #### Note:
