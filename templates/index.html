@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <!-- CSS only -->
+    <link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../static/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="../static/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+<div class="row bg-primary">
+    <div class="col-md-12 text-center">
+        <h1 >Visualizing Similarity of text using Word Importance</h1>
+        <sub style="bottom: 0em;">Note: Using Universal Sentence Encoder Large (Version 5) </sub>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 4%;">
+
+
+    <div class="row">
+
+
+        <div class="form-row">
+            <div class="form-group col-md-3"></div>
+            <div class="form-group col-md-6">
+                <label for="user_text">Text</label>
+                <textarea class="form-control txt_response" id="user_text"></textarea>
+            </div>
+
+            <div class="form-group col-md-3"></div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+
+            <button id="find_relevance" class="btn btn-primary">Word visualization</button>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">Impact on similarity:<img src="{{ url_for('static',filename='images/green.png') }}"></div>
+
+        <div class="col-md-4"></div>
+    </div>
+    <br><br>
+    <div class="row">
+
+        <div class="col-md-6">Text: <span id="visualize_text"></span> </div>
+        <div class="col-md-6">Top words <span id="top_words"></span> </div>
+    </div>
+</div>
+
+
+<!-- JS, Popper.js, and jQuery -->
+<script type="text/javascript" src="../static/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js" ></script>
+<script>
+    $('.overlay').show()
+    $(document).on('click', '#find_relevance', function (e) {
+        $.ajax({
+            url: '/get_relevance',
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                "user_text": $('#user_text').val(),
+
+            }),
+            beforeSend: function () {
+               $.LoadingOverlay("show");
+            },
+            complete: function () {
+                $.LoadingOverlay("hide");
+            }
+        }).done(function (jsondata, textStatus, jqXHR) {
+            // TODO: Replace by top 10 words
+            $("#top_words").html('<b>'+jsondata['word_importance'].join("\n")+'</b>');
+            $('#visualize_text').html('<h4>'+jsondata['text']+'</h4>');
+
+        }).fail(function (jsondata, textStatus, jqXHR) {
+            console.log(jsondata)
+        });
+    })
+
+</script>
+</body>
+</html>
