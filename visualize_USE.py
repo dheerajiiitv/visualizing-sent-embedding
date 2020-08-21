@@ -25,10 +25,8 @@ def get_important_words(original_text, reference_text):
 def get_color(score):
     if score > 0:
         return tps.color.brewer.map('Greens').css(1 - score, domain_min=0, domain_max=1)
-    elif score < 0:
-        return tps.color.brewer.map('Reds').css(1 + score, domain_min=0, domain_max=1)
     else:
-        return 'rgba(0,0,0)'
+        return tps.color.brewer.map('Reds').css(1 + score, domain_min=0, domain_max=1)
 
 
 def get_visual_representation(scores, user_text):

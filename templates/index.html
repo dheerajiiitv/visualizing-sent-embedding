@@ -47,17 +47,16 @@
         </div>
         <div class="col-md-4"></div>
     </div>
-    <div class="row">
+    <div class="form-group row">
         <div class="col-md-4"></div>
-        <div class="col-md-4">Impact on similarity:<img src="{{ url_for('static',filename='images/green.png') }}"></div>
+        <div class="col-md-4 text-center"><h3>Impact on similarity:</h3><img src="{{ url_for('static',filename='images/green.png') }}"></div>
 
         <div class="col-md-4"></div>
     </div>
-    <br><br>
-    <div class="row">
+    <div class="form-group row">
 
-        <div class="col-md-6">Text: <span id="visualize_text"></span> </div>
-        <div class="col-md-6">Top words <span id="top_words"></span> </div>
+        <div class="col-md-6"><b>Text:</b><span id="visualize_text"></span> </div>
+        <div class="col-md-6"><b>Top 6 words - </b><br> <span id="top_words"></span> </div>
     </div>
 </div>
 
@@ -86,7 +85,7 @@
             }
         }).done(function (jsondata, textStatus, jqXHR) {
             // TODO: Replace by top 10 words
-            $("#top_words").html('<b>'+jsondata['word_importance'].join("\n")+'</b>');
+            $("#top_words").html(jsondata['word_importance'].split("\n").join("<br>"));
             $('#visualize_text').html('<h4>'+jsondata['text']+'</h4>');
 
         }).fail(function (jsondata, textStatus, jqXHR) {
